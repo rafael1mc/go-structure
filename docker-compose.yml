@@ -1,0 +1,42 @@
+services:
+  api:
+    build:
+      dockerfile: cmd/api/Dockerfile
+      context: .
+    platform: linux/amd64
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
+    ports:
+      - "8080:8080"
+    environment:
+      APP_DEBUG: true
+      DB_HOST: "database"
+      DB_NAME: "postgres"
+      DB_USER: "postgres"
+      DB_PASS: "postgres"
+      DB_PORT: 5432
+      REDIS_HOST: "redis"
+      REDIS_PORT: 6379
+      REDIS_PASS: "123456"
+    depends_on:
+      - database
+      - redis
+  database:
+    image: postgres
+    platform: linux/amd64
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    # TODO: add volume to database
+  redis:
+    image: redis
+    platform: linux/amd64
+    restart: always
+    ports:
+      - 6379:6379
+    environment:
+      - REDIS_PASSWORD=123456

@@ -1,0 +1,10 @@
+**Dockerfile
+**.DS_Store
+**.env
+**.md
+cover.*
+__debug**
+
+**.dockerignore
+
+tmp/

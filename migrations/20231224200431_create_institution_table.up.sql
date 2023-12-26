@@ -1,0 +1,12 @@
+CREATE TABLE IF NOT EXISTS institution (
+    id UUID PRIMARY KEY,
+    name_ VARCHAR NOT NULL,
+    is_enabled BOOL NOT NULL DEFAULT TRUE,
+    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+CREATE TRIGGER set_timestamp
+BEFORE UPDATE ON institution
+FOR EACH ROW
+EXECUTE PROCEDURE trigger_set_timestamp();
